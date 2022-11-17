@@ -6,7 +6,7 @@ API_ID=12345
 API_Token=abcdefghijklmnopq2333333
 domain=example.com
 host=home
-CHECKURL="http://ip.03k.org"
+CHECKURL="https://myip4.ipip.net"
 #OUT="pppoe"
 #CONF END
 . /etc/profile
