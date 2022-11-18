@@ -5,11 +5,13 @@ API_ID=12345
 API_Token=abcdefghijklmnopq2333333
 domain=example.com
 host=home
-CHECKURL="https://myip4.ipip.net"
+CHECKURL=https://myip4.ipip.net
 # OUT="pppoe"
 # CONF END
 
 printf "[$(date +"%F %T %Z")] "
+
+# Query CHECKURL IP and public DNS IP
 if (echo $CHECKURL | grep -q "://"); then
 	IPREX='([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])'
 	URLIP=$(curl -4 -k $(if [ -n "$OUT" ]; then echo "--interface $OUT"; fi) -s $CHECKURL | grep -Eo "$IPREX" | tail -n1)
@@ -32,6 +34,7 @@ if (echo $CHECKURL | grep -q "://"); then
 	fi
 fi
 
+# Update DDNS
 token="login_token=${API_ID},${API_Token}&format=json&lang=en&error_on_empty=yes&domain=${domain}&sub_domain=${host}"
 Record="$(curl -4 -k $(if [ -n "$OUT" ]; then echo "--interface $OUT"; fi) -s -X POST https://dnsapi.cn/Record.List -d "${token}")"
 iferr="$(echo ${Record#*code} | cut -d'"' -f3)"

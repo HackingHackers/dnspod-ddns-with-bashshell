@@ -25,7 +25,7 @@ API的ID和Token可以在后台获取：
 
 ### **dnspod_ddns.sh**
 #### 参数说明  
->在脚本开头#CONF START到#CONF END之间为用户所需填写的参数:  
+在脚本开头`#CONF START`到`#CONF END`之间为用户所需填写的参数:  
 
 参数|填写说明
 :-:|:-
