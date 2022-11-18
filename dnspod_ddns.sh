@@ -21,7 +21,7 @@ if (echo $CHECKURL | grep -q "://"); then
 	# echo "[URL IP]: $URLIP"
 	dnscmd="nslookup"
 	type nslookup >/dev/null 2>&1 || dnscmd="ping -c1"
-	DNSTEST=$($dnscmd $host.$domain)
+	DNSTEST=$($dnscmd $(if [ "$host" != "@" ]; then echo "$host."; fi)$domain)
 	if [ "$?" != 0 ] && [ "$dnscmd" == "nslookup" ] || (echo $DNSTEST | grep -qEvo "$IPREX"); then
 		printf "(warning: failed to reach DNS) "
 	else
