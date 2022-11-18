@@ -16,20 +16,20 @@ if (echo $CHECKURL | grep -q "://"); then
 	IPREX='([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])'
 	URLIP=$(curl -4 -k $(if [ -n "$OUT" ]; then echo "--interface $OUT"; fi) -s $CHECKURL | grep -Eo "$IPREX" | tail -n1)
 	if (echo $URLIP | grep -qEvo "$IPREX"); then
-		URLIP="Failed to query IP."
+		printf "(warning: failed to query IP) "
 	fi
 	# echo "[URL IP]: $URLIP"
 	dnscmd="nslookup"
 	type nslookup >/dev/null 2>&1 || dnscmd="ping -c1"
 	DNSTEST=$($dnscmd $host.$domain)
 	if [ "$?" != 0 ] && [ "$dnscmd" == "nslookup" ] || (echo $DNSTEST | grep -qEvo "$IPREX"); then
-		DNSIP="Failed to reach DNS."
+		printf "(warning: failed to reach DNS) "
 	else
 		DNSIP=$(echo $DNSTEST | grep -Eo "$IPREX" | tail -n1)
 	fi
 	# echo "[DNS IP]: $DNSIP"
-	if [ "$DNSIP" == "$URLIP" ]; then
-		printf "SKIPPING: IP not changed\n"
+	if [ "$DNSIP" == "$URLIP" ] && [ -n "$DNSIP" ]; then
+		echo "SKIPPING: IP not changed"
 		exit
 	fi
 fi
@@ -42,7 +42,7 @@ if [ "$iferr" == "1" ]; then
 	record_ip=$(echo ${Record#*value} | cut -d'"' -f3)
 	# echo "[API IP]: $record_ip"
 	if [ "$record_ip" == "$URLIP" ]; then
-		printf "SKIPPING: already updated\n"
+		echo "SKIPPING: already updated"
 		exit
 	fi
 	record_id=$(echo ${Record#*\"records\"\:\[\{\"id\"} | cut -d'"' -f2)

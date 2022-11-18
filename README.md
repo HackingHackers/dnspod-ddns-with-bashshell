@@ -5,7 +5,7 @@
 https://github.com/kkkgo/CloudXNS-DDNS-with-BashShell  
 https://github.com/kkkgo/CloudXNS-DDNS-with-PowerShell  
 ## 使用方法
-本脚本分为两个版本，一个是获取自己外网ip的版本dnspod_ddns.sh，一个是直接获取自己网卡设备上的ip的版本dnspod_ddns_line.sh（对于多拨或者路由器网关用户适用）。
+本脚本分为两个版本，一个是获取自己外网IP的版本`dnspod_ddns.sh`，一个是直接获取自己网卡设备上的IP的版本`dnspod_ddns_line.sh`（对于多拨或者路由器网关用户适用）。
 ### 获取API的ID和Token
 API的ID和Token可以在后台获取：
 >1. 登录 [DNSPod 账号中心控制台](https://console.dnspod.cn/account/token/token)，进入 **API密钥** -> **DNSPod Token**。
@@ -49,8 +49,8 @@ OUT|指定使用某个网卡设备进行联网通信（默认被注释掉）。�
 另外对于一些带有Web管理界面嵌入式系统（比如openwrt），有图形化的计划任务菜单管理，可以直接把脚本粘贴进去。
 
 #### 工作过程
-1、用CHECKURL检查自己的外网ip和本地解析记录是否相同，相同则退出；  
-2、使用API获取域名在Dnspod平台的ip记录，如果CHECKURL（line.sh则是直接获取网卡ip）获取IP结果和“本地DNS解析记录或者API记录”相同则退出；获取记录异常也会退出并返回错误信息（例如域名不存在No Record）；  
+1、用CHECKURL检查自己的外网IP和本地解析记录是否相同，相同则退出；  
+2、使用API获取域名在Dnspod平台的IP记录，如果CHECKURL（line.sh则是直接获取网卡IP）获取IP结果和“本地DNS解析记录或者API记录”相同则退出；获取记录异常也会退出并返回错误信息（例如域名不存在No Record）；  
 3、执行DNS更新，并返回执行结果。
 #### 注意事项
 本脚本**不会**自动创建子域名，请务必先到后台添加一个随意的子域名A记录，否则会提示No Record 
@@ -58,19 +58,18 @@ OUT|指定使用某个网卡设备进行联网通信（默认被注释掉）。�
 
 ### **dnspod_ddns_line.sh**
 仅说明与上面脚本参数不同的地方。  
-因该脚本是用于获取网卡设备ip，所以没有CHECKURL参数。  
+因该脚本是用于获取网卡设备IP，所以没有CHECKURL参数。  
 #### 参数说明
 参数|填写说明
 :-:|:-
-|DEV | 从网卡设备（例如eht0）上获取ip，并与DNS记录比对更新。推荐使用```ip a```命令```ifconfig```命令查看网卡设备名称。  
+|DEV | 从网卡设备（例如eht0）上获取IP，并与DNS记录比对更新。推荐使用```ip a```命令```ifconfig```命令查看网卡设备名称。  
 
 ### 日志参考
 现象|说明
 :-|:-
-[DNS IP]为Get Domain Failed|本地DNS解析出现问题（断网、DNS服务器不工作、域名记录错误）
-[URL IP]为空|访问CHECKURL失败，检查网络访问CHECKURL是否正常
+`warning: failed to reach DNS`|本地DNS解析出现问题（断网、DNS服务器不工作、域名记录错误）
+`warning: failed to query IP`|访问CHECKURL失败，检查网络访问CHECKURL是否正常
 No Record|不存在该域名或者该主机记录（本脚本**不会**自动创建子域名，请务必先到后台添加一个随意的子域名A记录）
 API usage is limited|调用API频率过高账号被冻结（一小时后解封），正常使用一般不会出现
-[URL IP]或者[DEV IP] 和[DNS IP]不一样但和[API IP]一样|DNS有缓存，DNS记录是已经更新，属正常现象，会提示IP SAME IN API,SKIP UPDATE.自动忽略
 ### **关于**
 https://03k.org/dnspod-ddns-with-bashshell.html
