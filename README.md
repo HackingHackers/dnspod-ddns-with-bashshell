@@ -7,13 +7,22 @@ https://github.com/kkkgo/CloudXNS-DDNS-with-PowerShell
 ## 使用方法
 本脚本分为两个版本，一个是获取自己外网ip的版本dnspod_ddns.sh，一个是直接获取自己网卡设备上的ip的版本dnspod_ddns_line.sh（对于多拨或者路由器网关用户适用）。
 ### 获取API的ID和Token
-API的ID和Token可以在后台获取：  
->创建一个 Token，依次点击 用户中心 -> 安全设置 -> API Token：
-![创建一个 Token](https://support.dnspod.cn/Uploads/api-tokens-1.png)
->点击创建一个 Token，输入 Token 名称即可，名称仅用来标记 Token，方便用户管理 Token ，不参与鉴权。
-![输入 Token 名称](https://support.dnspod.cn/Uploads/api-tokens-2.png)     
->点击 “确定” 之后，Token 创建成功，会弹出如下提示框：
-![Token 创建成功](https://support.dnspod.cn/Uploads/api-tokens-3.png)
+API的ID和Token可以在后台获取：
+>1. 登录 [DNSPod 账号中心控制台](https://console.dnspod.cn/account/token/token)，进入 **API密钥** -> **DNSPod Token**。
+>2. 在密钥管理控制台中，单击**创建密钥**。如下图所示：
+>
+>![创建一个 Token](https://main.qcloudimg.com/raw/5a5b49fcbe43f62e0cd82525da97ae92.png)
+>
+>3. 在弹出的创建密钥窗口中，输入密钥名称，密钥名称仅用来标记 Token，方便用户管理 Token ，不参与鉴权。如下图所示：
+>
+>![输入 Token 名称](https://main.qcloudimg.com/raw/e627187181db8aa520e48fdb3c17c8e3.png)     
+>
+>4. 输入密钥名称后，单击确定，会弹出如下提示框。
+>
+>![Token 创建成功](https://main.qcloudimg.com/raw/09973397e6374d4dcb9360a267d8f720.png)
+>
+>来源：[DNSPod 文档](https://docs.dnspod.cn/account/dnspod-token/#token)
+
 ### **dnspod_ddns.sh**
 #### 参数说明  
 >在脚本开头#CONF START到#CONF END之间为用户所需填写的参数:  
